@@ -10,7 +10,7 @@ CSV_FOLDER = "C:\\temp\\project\\raw_data\\citibike"
 conn = psycopg2.connect(
     dbname="final_project",
     user="postgres",
-    password="Manes1234",  # Replace with your actual password
+    password="----",  # Replace with your actual password
     host="localhost",
     port=5432
 )
