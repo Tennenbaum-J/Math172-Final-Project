@@ -51,6 +51,45 @@ Included are the charts focusing on the relationship between a specific weather 
 
 The dashboard can be viewed here: https://public.tableau.com/app/profile/esther.yee/viz/EDA_Visual/Dashboard1#1
 
+# Phase 3 & 4
+
+**Tableau Storyline**
+
+**Ridership Overview:** https://public.tableau.com/app/profile/esther.yee/viz/Final_Dashboard_Ridership/RidershipOverview#1
+
+In the Ridership Overview dashboard, I started with a month-by-month time series of total ridership. As shown, there’s a major dip starting in March 2020, which aligns with the onset of COVID-19. From that point until late 2021, ridership grew rapidly, then leveled off into a steadier increase through December 2024. The drop in January 2025 is just due to limited data — we only have records from the first week.
+
+The second graph displays monthly ridership again, this time broken down by transportation mode. This shows that subway riders consistently make up the largest share, followed by bus riders.
+
+Next is a sparklines chart for each transportation mode. Although each mode is scaled differently (with reference lines provided), we can observe that most modes follow similar overall trends in ridership.
+
+The proportion of ridership by mode per month dives deeper, highlighting percent changes in modal share over time. During the 2020–2021 COVID period, we see that a larger share of ridership came from subways and CitiBikes. This could reflect people avoiding enclosed spaces or opting for more physically distant transit options. From 2021 onward, the monthly percentages fluctuate, but we noticed larger shifts tend to align with seasons, suggesting a seasonal effect on ridership. This leads to us creating the dashboard for Ridership vs. Weather.
+
+**Seasonal and Weather Overview:**
+ https://public.tableau.com/app/profile/esther.yee/viz/Final_Dashboard_Weather/RidershipvsWeather#1
+
+In the first graph of this dashboard, we explored the relationship of ridership by season. We clearly see that ridership drops in both summer and winter, hinting that weather, particularly temperature, could be a factor. We further investigate Ridership vs Temperature in a scatterplot, where each data point represents a day and its color by mode.  We also included a linear regression trend line.  We then extended the exploration of ridership vs. weather further, looking into weather conditions such as rain and snowfall. 
+
+**Findings**
+
+The scatterplots reveals that extreme temperatures correspond with lower ridership overall. CitiBike usage increases on warmer days, while subway and bus ridership remains relatively stable across all temperature ranges. 
+
+We suspected that weather conditions such as rain and snow would negatively impact CitiBike ridership, and this was reflected with noticeable drops as precipitation increases. We also observed that subway, bus, and taxi ridership decline modestly in snowy conditions, though not as sharply as bikes which could indicator that these modes are more weather resilience.
+
+While temperature has a clear effect on active modes like biking, it doesn’t fully explain shifts in the other modes, suggesting that other factors that may also play a role.
+
+**Limitations of the Data, Future Research**
+
+Pandemic Effects: Ridership dropped sharply from April to August 2020, which could distort weather-related trends. From that point until late 2022, we see a period of recovery, but behavior during this time may still reflect pandemic-related disruptions rather than weather alone. Mode shares also shifted, so future analysis could benefit from isolating or adjusting for these months.
+
+Multimodal Overlap: Riders often use more than one mode in a day (e.g., subway then bus), and free transfers plus OMNY rollout make this even easier. Because modes aren’t mutually exclusive, the same rider might be counted more than once, which could blur how weather impacts each mode.
+
+Overlapping Weather Conditions: Weather variables aren’t mutually exclusive as well, for example, cold days often coincide with snowfall, and rainy days may also be windy. These overlaps make it harder to isolate the effect of a single weather factor on ridership.
+
+No Demographics or Pricing: We didn’t have data on rider age, income, or fare changes. These likely influence how people respond to weather (e.g., choosing to bike, walk, or take a taxi during storms or heatwaves).
+
+A more in-depth exploration of limitations and future research can be found here: https://mamaroneck-my.sharepoint.com/:w:/g/personal/jwilhelm_mamkschools_org/ESnJUztioSZCu4MONKIh24gBzAY6CcJ9Fthu57SwU-wtdA?e=OQdytQ
+
 # Notes on the data:
 1) MTA Daily Ridership Data
 This dataset was clean from the get-go. All we did was import it as a ```VARCHAR``` to ensure landing, and then copied it to a cleaned table with the correct types. One thing to note with this table is that this is the limit when it comes to the dates. The other data sets went further back in time, but this one only went to 2020.
@@ -61,5 +100,5 @@ This dataset was in the form of many parquet files. To import the data we used a
 3) National Weather Service  
 To get this data from the National Weather Service, we had to go to their website and request it; however, due to data limitations, we had to ship it in two separate parts. A consequence of this is that the schema has changed between the two tables. We solved this by normalising the schema of the CSVs using a Python script. We could the copy the data into a ```VARCHAR``` table to ensure eveything landed. At this point, each row of the data represented the reading of a single weather station per day, but we were interested in the average daily data. To solve for this, we aggregated the data into a clean table, grouping the relevant information by date. One column of note was a categorical variable, so special code was required to get the mode of the feature.
 
-6) Citi Bike
+4) Citi Bike
 To import this data, we used a Python script and then unzipped the files using the terminal. Once the files were unzipped, we used a Python script to copy them into a ```VARCHAR``` table to ensure everything landed. At this point, each row of the data represented a single ride, but we were interested in daily data. To solve this, we aggregated the data into a clean table, grouping the relevant information by date.
